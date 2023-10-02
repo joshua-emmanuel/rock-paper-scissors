@@ -151,8 +151,8 @@ playAgainBtn.addEventListener('click', resetUI);
 
 if (typeof process !== 'undefined' && process.env.NETLIFY_BUILD === 'true') {
   // This is the Netlify build, add the type="module" attribute.
-  document.write('<script type="module" src="/assets/js/script.js"></script>');
+  document.write('<script type="module" src="./assets/js/script.js"></script>');
 } else {
   // This is your local build or other environments, add the regular script tag.
-  document.write('<script src="/assets/js/script.js"></script>');
+  document.write('<script src="./assets/js/script.js"></script>');
 }
