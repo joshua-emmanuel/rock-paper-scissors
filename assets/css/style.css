@@ -144,6 +144,13 @@ body {
   max-width: 30%;
 }
 
+.scores {
+  display: flex;
+  color: var(--clr-dark);
+  border-radius: 0.5rem;
+  background-color: var(--clr-light);
+}
+
 .score {
   display: flex;
   flex-direction: column;
@@ -151,15 +158,13 @@ body {
   justify-content: center;
   text-align: center;
   line-height: 0.9;
-  padding: 1rem 1.5rem;
-  border-radius: 0.5rem;
-  color: var(--clr-dark);
-  background-color: var(--clr-light);
+  padding: 1rem 1.5rem; 
 }
 
 .score__title {
   font-size: 0.75rem;
   letter-spacing: 0.1em;
+  padding-bottom: .2rem;
   color: var(--clr-score);
 }
 

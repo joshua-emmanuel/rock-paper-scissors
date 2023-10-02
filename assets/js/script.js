@@ -8,7 +8,8 @@ const housePlaceholder = document.querySelector('.results__result--house');
 const resultsWinner = document.querySelector('.results__winner');
 const winStatus = document.querySelector('.win-status');
 const playAgainBtn = document.querySelector('.play-again');
-const score = document.querySelector('.score__number');
+const playerScore = document.querySelector('.score--player .score__number');
+const houseScore = document.querySelector('.score--house .score__number');
 
 openModalBtn.addEventListener("click", () => {
   rulesModal.showModal();
@@ -106,9 +107,9 @@ function highlightWinner(winner) {
 
 function setScore(winner) {
   if (winner === 'Player') {
-    score.textContent = Number(score.textContent) + 1;
+    playerScore.textContent = Number(playerScore.textContent) + 1;
   } else if (winner === 'House') {
-    score.textContent = Number(score.textContent) - 1;
+    houseScore.textContent = Number(houseScore.textContent) + 1;
   }
 }
 
