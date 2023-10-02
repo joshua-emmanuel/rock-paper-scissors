@@ -491,7 +491,6 @@ body {
   .rules-modal {
     position: relative;
     min-height: 100vh;
-    min-height: 100svh;
     min-width: 100%;
     margin: 0;
     border-radius: 0;
@@ -505,7 +504,7 @@ body {
 
   .rules-modal__btn {
     position: absolute;
-    bottom: 10vh;
+    bottom: 5vh;
     left: 50%;
     transform: translateX(-50%);
   }
