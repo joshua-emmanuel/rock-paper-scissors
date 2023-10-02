@@ -87,3 +87,429 @@ textarea:not([rows]) {
 :target {
   scroll-margin-block: 5ex;
 }
+
+:root {
+  --clr-light: hsl(255, 100%, 100%);
+  --clr-dark: hsl(229, 25%, 31%);
+  --clr-score: hsl(229, 64%, 46%);
+  --clr-outline: hsl(217, 16%, 45%);
+
+  --background-gradient--1: hsl(214, 47%, 23%);
+  --background-gradient--2: hsl(237, 49%, 15%);
+
+  --scissors-gradient--1: hsl(39, 89%, 49%);
+  --scissors-gradient--2: hsl(40, 84%, 53%);
+
+  --paper-gradient--1: hsl(230, 89%, 62%);
+  --paper-gradient--2: hsl(230, 89%, 65%);
+
+  --rock-gradient--1: hsl(349, 71%, 52%);
+  --rock-gradient--2: hsl(349, 70%, 56%);
+
+  --shadow-light: hsla(0, 0%, 0%, 0.15);
+  --shadow-medium: hsla(0, 0%, 0%, 0.30);
+
+  --fw-base: 600;
+  --fw-bold: 700;
+}
+
+body {
+  font-family: "Barlow Semi Condensed", sans-serif;
+  text-transform: uppercase;
+  background: radial-gradient(
+    at top,
+    var(--background-gradient--1),
+    var(--background-gradient--2)
+  );
+  color: var(--clr-light);
+}
+
+/* Header */
+.header {
+  padding-block: 1.5rem;
+}
+
+.header__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(700px, 100% - 2rem);
+  margin-inline: auto;
+  padding: 1rem 1.5rem;
+  border: 3px solid var(--clr-outline);
+  border-radius: 0.5rem;
+}
+
+.header__logo {
+  max-width: 30%;
+}
+
+.score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 0.9;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  color: var(--clr-dark);
+  background-color: var(--clr-light);
+}
+
+.score__title {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--clr-score);
+}
+
+.score__number {
+  font-size: 3rem;
+  font-weight: var(--fw-bold);
+}
+
+@media (min-width: 50em) {
+  .score {
+    padding: 1rem 2rem;
+  }
+
+  .score__title {
+    font-size: 1.1rem;
+  }
+
+  .score__number {
+    font-size: 4rem;
+  }
+}
+
+/* Game */
+.game {
+  position: relative;
+  background-image: url('../images/bg-triangle.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 15rem;
+  z-index: 1;
+}
+
+.game__wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas:
+    "paper scissors"
+    "rock rock";
+  place-items: center;
+  width: min(700px, 100% - 1rem);
+  margin-inline: auto;
+  min-height: 25rem;  
+}
+
+.choice-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: transform 200ms ease-out;
+}
+
+.choice-btn:hover {
+  transform: scale(1.05);
+}
+
+.choice {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 10rem;
+  height: 10rem;
+  scale: 0.75;
+  border-radius: 50%;
+  background-color: var(--clr-light);
+  box-shadow: inset 0 .2rem var(--shadow-light);
+}
+
+.choice::before {
+  content: '';
+  position: absolute;
+  left: -15%;
+  top: -15%;
+  width: 130%;
+  height: 130%;
+  border-radius: 50%;
+  z-index: -2000;
+}
+
+.choice::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: white;
+  z-index: -2;
+}
+
+.choice img {
+  transform: scale(1.5);
+}
+
+.choice--paper::before {
+  background: linear-gradient(to bottom, var(--paper-gradient--1), var(--paper-gradient--2));
+  box-shadow: 0 .5rem var(--shadow-medium), 0 .5rem var(--paper-gradient--2);
+}
+
+.choice--scissors::before {
+  background: linear-gradient(to bottom, var(--scissors-gradient--1), var(--scissors-gradient--2));
+  box-shadow: 0 .5rem var(--shadow-medium), 0 .5rem var(--scissors-gradient--2);
+}
+
+.choice--rock::before {
+  background: linear-gradient(to bottom, var(--rock-gradient--1), var(--rock-gradient--2));
+  box-shadow: 0 .5rem var(--shadow-medium), 0 .5rem var(--rock-gradient--2);
+}
+
+.choice-btn > * {
+  pointer-events: none;
+}
+
+.choice-btn[data-choice="rock"] {
+  grid-area: rock;
+}
+
+.choice-btn[data-choice="paper"] {
+  grid-area: paper;
+}
+
+.choice-btn[data-choice="scissors"] {
+  grid-area: scissors;
+}
+
+@media (min-width: 45em) {
+  .game__wrapper {
+    padding-inline: 2.5rem;
+  }
+
+  .game {
+    background-position: center;
+    background-size: 18rem;
+  }
+
+  .choice {
+    scale: 1;
+  }
+
+  .choice img {
+    transform: scale(1.5);
+  }
+}
+
+/* Game Results */
+.results__wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas: 
+    'player-choice house-choice'
+    'player-title house-title';
+  place-items: center;
+  width: min(1000px, 100% - 2rem);
+  margin-inline: auto;
+}
+
+.results__title {
+  font-size: 1.1rem;
+  letter-spacing: .1em;
+  padding-block: 1rem 4rem;
+}
+
+.results__result {
+  min-width: 10rem;
+  min-height: 10rem;
+  object-fit: center;
+  background-color: #16213D;
+  border-radius: 50%;
+  margin-block: 2rem;
+}
+
+.results__title:first-of-type {
+  grid-area: player-title;
+}
+
+.results__title:last-of-type {
+  grid-area: house-title;
+}
+
+.results__result--player {
+  grid-area: player-choice;
+}
+
+.results__result--house {
+  grid-area: house-choice;
+}
+
+.results.show-winner .results__wrapper {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas: 
+    'player-choice house-choice'
+    'player-title house-title'
+    'result-winner result-winner';
+}
+
+.results__winner {
+  grid-area: result-winner;
+  display: grid;
+  place-items: center;
+}
+
+.win-status {
+  font-size: 3.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.play-again {
+  cursor: pointer;
+  outline: none;
+  text-transform: uppercase;
+  padding: .5rem 3.5rem;
+  border: 2px solid transparent;
+  border-radius: .5rem;
+  color: var(--clr-dark);
+  background-color: white;
+}
+
+.play-again:focus {
+  border: 2px solid var(--clr-outline);
+}
+
+.winner {
+  position: relative;
+}
+
+.winner::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: -10;
+  animation: winner 1500ms ease forwards;
+  box-shadow: 0 0 0 20px #293251, 0 0 0 60px #232c4b, 0 0 0 80px #1e2949;
+}
+
+@keyframes winner {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 50em) {
+  .results__wrapper {
+    grid-template-areas: 
+      'player-title house-title'
+      'player-choice house-choice';
+    padding-inline: 10rem;
+  }
+
+  .results.show-winner .results__wrapper {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: 
+      'player-title . house-title'
+      'player-choice result-winner house-choice';
+    padding-inline: 4rem; 
+  }
+
+  .results__title {
+    font-size: 1.5rem;
+    padding-block: 2rem 4rem;
+  }
+
+  .results__result {
+    margin-top: 0;
+  }
+}
+
+/* Game Rules */
+.rules {
+  position: absolute;
+  bottom: 2rem;
+  width: 100%;
+  display: grid;
+  justify-content: center;
+  z-index: 5;
+}
+
+.rules__btn {
+  cursor: pointer;
+  outline: none;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  padding: .5rem 2.5rem;
+  border: 1px solid var(--clr-outline);
+  border-radius: .5rem;
+  color: var(--clr-light);
+  background: transparent;
+}
+
+.rules__btn:focus {
+  border: 2px solid #FFF;
+}
+
+@media (min-width: 35em) {
+  .rules {
+    right: 2rem;
+    justify-content: end;
+  }
+}
+
+.rules-modal {
+  border: 0;
+  border-radius: .5rem;
+}
+
+.rules-modal__wrapper {
+  padding: 2rem;
+}
+
+.rules-modal__header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3.5rem;
+  color: var(--clr-dark);
+  font-size: 1.25rem;
+}
+
+.rules-modal__btn {
+  cursor: pointer;
+  border: 0;
+  background: none;
+}
+
+@media (max-width: 35em) {
+  .rules-modal {
+    position: relative;
+    min-height: 100vh;
+    min-width: 100%;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .rules-modal__wrapper {
+    min-height: 80vh;
+    display: grid;
+    place-items: center;
+  }
+
+  .rules-modal__btn {
+    position: absolute;
+    bottom: 10vh;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+[aria-hidden="true"] {
+  display: none;
+}
