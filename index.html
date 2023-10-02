@@ -76,10 +76,7 @@
     // Create a new script element
     const script = document.createElement('script');
     // Set the src attribute based on the environment variable
-    script.src = (typeof process !== 'undefined' && process.env.NETLIFY_BUILD === 'true')
-      ? './assets/js/script.js'
-      : './assets/js/script.js'; // Set the appropriate path for your local build or other environments
-    
+    script.src = './assets/js/script.js';  
     // Set the type attribute
     script.type = (typeof process !== 'undefined' && process.env.NETLIFY_BUILD === 'true')
       ? 'module'
