@@ -504,7 +504,7 @@ body {
 
   .rules-modal__btn {
     position: absolute;
-    bottom: 5vh;
+    bottom: 20vh;
     left: 50%;
     transform: translateX(-50%);
   }
